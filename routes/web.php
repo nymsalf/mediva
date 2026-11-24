@@ -14,9 +14,23 @@ use App\Http\Controllers\DoctorMedicalRecordIndexController;
 use App\Http\Controllers\DoctorPatientController;
 use App\Http\Controllers\DoctorPatientDetailController;
 use App\Http\Controllers\DoctorPrescriptionController;
+use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\OrderHistoryController;
 
 // Publik
 Route::get('/', fn () => view('dashboard'));
+
+Route::get('/pharmacy', [PharmacyController::class, 'index'])
+    ->name('pharmacy.index');
+
+Route::post('/pharmacy/buy/{id}', [PurchaseController::class, 'buy'])
+    ->middleware('auth')
+    ->name('pharmacy.buy');
+
+Route::get('/my-orders', [OrderHistoryController::class, 'index'])
+    ->middleware('auth')
+    ->name('patient.orders.index');
 
 Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
